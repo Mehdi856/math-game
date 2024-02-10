@@ -1,110 +1,160 @@
 let game = document.getElementById('game')
 let startDiv = document.getElementById('start')
 let strBtn = document.getElementById('strBtn')
+let lose = document.getElementById('lose')
 
 
 let quiz = [
     {
         question : '22 + 58',
-        a : '57',
-        b : '80',
-        c : '89',
-        d : '78',
         answer : '80'
     },
 
     {
         question : '37 x 3',
-        a : '111',
-        b : '93',
-        c : '104',
-        d : '121',
         answer : '111'
     },
 
     {
         question : '52 x 13',
-        a : '513',
-        b : '689',
-        c : '676',
-        d : '706',
         answer : '676'
     },
 
     {
         question : '1265 + 745',
-        a : '2010',
-        b : '2023',
-        c : '1989',
-        d : '2012',
         answer : '2010'
     },
 
     {
         question : '3345 - 489',
-        a : '2896',
-        b : '3002',
-        c : '2789',
-        d : '2856',
         answer : '2856'
     },
 
     {
         question : '321 + 654 + 987',
-        a : '1962',
-        b : '1952',
-        c : '1987',
-        d : '2001',
         answer : '1962'
     },
 
     {
-        question : '22 + 58',
-        a : '57',
-        b : '80',
-        c : '89',
-        d : '78',
-        answer : '80'
+        question : '202 + 518',
+        answer : '720'
     },
-    /*{},
-    {},
-    {}*/
+    {
+        question : '258 / 43',
+        answer : '6'
+    },
+
+    {
+        question : '11 x 78',
+        answer : '858'
+    },
+
+    {
+        question : '119 x 3 / 7',
+        answer : '51'
+    }
 ]
-/*
-let p = document.getElementById('p')
-console.log(p.textContent == quiz[0].answer)*/
 
-let score = 0
-let highestScore = 0
-let equation = document.getElementById('equation')
-let optionOne = document.getElementById('option1')
-let optionTwo = document.getElementById('option2')
-let optionThree = document.getElementById('option3')
-let optionFour = document.getElementById('option4')
-let options = document.getElementsByClassName('ops')
-
-function quizGame(){
+// start
+function start(){
     startDiv.style.display = 'none'
     game.style.display = 'flex'
-    
-        equation.textContent = quiz[i].question
-        optionOne.textContent = quiz[i].a
-        optionTwo.textContent = quiz[i].b
-        optionThree.textContent = quiz[i].c
-        optionFour.textContent = quiz[i].d
-        Array.from(options).forEach(element => {
-            element.addEventListener('click', function(){
-                /*if(element.textContent == quiz[i].answer){
-                    score += 1
-                }else{
-                    game.innerHTML = 'You lost Nigger'
-                    i = quiz.length
-                }*/
-                console.log(quiz[i].answer)
-            })
-        })
+    lose.style.display = 'none'
+    setQuestion()
+    clearInterval(timer)
+    timer()
 }
-    
+strBtn.addEventListener('click', start)
 
 
-strBtn.addEventListener('click', quizGame)
+let myanswer = document.getElementById('myanswer')
+let numbers = document.getElementsByClassName('number')
+let question = document.getElementById('equation')
+myanswer.textContent = ''
+let i = 0
+
+//scoring variables
+let scoreDiv = document.getElementById('currentScore')
+let score = 0
+scoreDiv.textContent = 'Your Score : ' + score
+let highestScoreDiv = document.getElementById('highestScore')
+let highestScore = 0
+highestScoreDiv.textContent = 'Highest Score : ' + highestScore
+//win
+function win(){
+    if(i>= quiz.length){
+        game.innerHTML = '<div id="win">Congratulaions you Won</div>'
+    }
+}
+
+//set question
+function setQuestion(){
+    question.textContent = quiz[i].question
+    scoreDiv.textContent = 'Your Score : ' + score
+    startSec = 20  
+}
+
+//append
+for(let i=0;i<numbers.length;i++){
+    numbers[i].addEventListener('click', function(){
+        myanswer.textContent += numbers[i].innerHTML
+    })
+}
+
+
+//chek answer
+let next = document.getElementById('nxt')
+let wrongMessage = document.getElementById('rng')
+function checkAnswer(){
+    if(myanswer.textContent == quiz[i].answer){
+        wrongMessage.textContent = ''
+        clear()
+        i++
+        setQuestion()
+        score++
+        scoreDiv.textContent = 'Your Score : ' + score
+        startSec = 21
+    }else{
+        clear()
+        wrongMessage.textContent = 'Wrong Answer!!! Try Again'
+    }
+}
+next.addEventListener('click', checkAnswer)
+
+
+
+//clear
+let del = document.getElementById('del')
+function clear(){
+    myanswer.textContent = ''
+}
+del.addEventListener('click', clear)
+
+
+
+//restart
+let restart = document.getElementById('rst')
+restart.addEventListener('click', start)
+
+function loseFun(){
+    game.style.display = 'none'
+    lose.style.display = 'flex'
+}
+
+//timer
+let timeDiv = document.getElementById('timer')
+let startSec = 20
+timeDiv.innerHTML = 'Time Left : ' + '<p id="tl">'+startSec+'</p>'
+let timeLeft;
+function timer(){
+    timeLeft = setInterval(() => {
+        if(startSec == 0){
+            loseFun()
+            return;
+        }
+        startSec = startSec - 1
+        timeDiv.innerHTML = 'Time Left : ' + '<p id="tl">'+startSec+'</p>'
+    }, 1000)
+}
+
+
