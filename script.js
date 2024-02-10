@@ -150,7 +150,7 @@ function timer(){
         if(startSec == 0){
             loseFun()
             return;
-            
+
         }
         startSec = startSec - 1
         timeDiv.innerHTML = 'Time Left : ' + '<p id="tl">'+startSec+'</p>'
@@ -158,3 +158,6 @@ function timer(){
 }
 
 
+function restarting(){
+    console.log('restart')
+}
