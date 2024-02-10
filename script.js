@@ -61,7 +61,6 @@ function start(){
     game.style.display = 'flex'
     lose.style.display = 'none'
     setQuestion()
-    clearInterval(timer)
     timer()
 }
 strBtn.addEventListener('click', start)
@@ -151,6 +150,7 @@ function timer(){
         if(startSec == 0){
             loseFun()
             return;
+            
         }
         startSec = startSec - 1
         timeDiv.innerHTML = 'Time Left : ' + '<p id="tl">'+startSec+'</p>'
