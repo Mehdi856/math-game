@@ -157,7 +157,3 @@ function timer(){
     }, 1000)
 }
 
-
-function restarting(){
-    console.log('restart')
-}
